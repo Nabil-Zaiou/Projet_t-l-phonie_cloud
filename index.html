@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Topline | Internet + Téléphonie IP : routeur TP-Link et postes Yealink</title>
+<meta name="description" content="Proposition de solution Internet et téléphonie IP avec routeur TP-Link et téléphones Yealink alimentés en PoE.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f5f7; --surface:#ffffff; --ink:#0f2230; --muted:#4f6575; --line:#d5dee5;
+  --brand:#f72a86;--data:#1f5fe0; --power:#e8920c; --ok:#0c8a5f;
+  --display:'Familjen Grotesk','Helvetica Neue',Arial,sans-serif;
+  --body:'Instrument Sans','Helvetica Neue',Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c1820; --surface:#13242f; --ink:#e8f0f5; --muted:#9bb0be; --line:#26404f;
+    --brand:#ff4f9f;--data:#6b9dff; --power:#ffb23d; --ok:#3fd39b; color-scheme:dark;
+  }
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);line-height:1.08;letter-spacing:-.02em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--data);outline-offset:3px;border-radius:6px}
+
+/* Barre logo */
+.top{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0}
+.top .lg{background:#fff;border-radius:12px;padding:5px 12px;border:1.5px solid var(--line);display:inline-flex}
+.top .lg img{height:38px;width:auto;display:block}
+.top span{font-size:14px;color:var(--muted);font-weight:500}
+/* Hero */
+header.hero{padding:0 0 56px;position:relative;overflow:hidden}
+header.hero .wrap{position:relative}
+header.hero .intro-block{padding-top:64px}
+.orb{position:absolute;right:-90px;top:-10px;width:min(46vw,470px);aspect-ratio:1;pointer-events:none}
+.orb img{width:100%;height:100%;display:block;filter:drop-shadow(0 30px 50px color-mix(in srgb,var(--brand) 35%,transparent))}
+.orb::after{content:'';position:absolute;inset:-26px;border-radius:50%;border:1.5px dashed color-mix(in srgb,var(--brand) 55%,transparent)}
+.tag{display:inline-flex;gap:10px;align-items:center;font-weight:600;font-size:15px;color:var(--muted);margin-bottom:28px}
+.tag i{width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 5px color-mix(in srgb,var(--brand) 25%,transparent)}
+h1{font-size:clamp(40px,7vw,84px);font-weight:700;max-width:13ch}
+h1 .d{color:var(--data)} h1 .p{color:var(--power)}
+.lead{font-size:clamp(18px,2.2vw,22px);max-width:56ch;margin-top:26px;color:var(--muted)}
+
+/* Configurator */
+.lab{position:relative;margin-top:56px;background:var(--surface);border:1.5px solid var(--line);border-radius:22px;padding:28px;display:grid;gap:28px;grid-template-columns:1fr 1.5fr}
+.ctrl h2{font-size:26px;margin-bottom:6px}
+.ctrl p{color:var(--muted);font-size:15px;margin-bottom:20px}
+.seg{display:grid;gap:8px;margin-bottom:22px}
+.seg button{font:600 15px var(--body);text-align:left;padding:12px 14px;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;cursor:pointer;transition:border-color .2s,background .2s}
+.seg button small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.seg button[aria-pressed="true"]{border-color:var(--data);background:color-mix(in srgb,var(--data) 10%,transparent)}
+label{font-weight:600;font-size:15px;display:flex;justify-content:space-between}
+input[type=range]{width:100%;margin-top:10px;accent-color:var(--data)}
+.stage{display:flex;flex-direction:column;gap:18px}
+.bus{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:10px;align-content:start;min-height:150px}
+.ph{border:1.5px solid var(--line);border-radius:10px;padding:8px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.ph svg{width:26px;height:26px;stroke:var(--ink);fill:none;stroke-width:1.6}
+.w{display:flex;gap:3px;height:20px}
+.w b{display:block;width:5px;border-radius:3px}
+.w .d{background:var(--data)} .w .p{background:var(--power)}
+.w .x{background:repeating-linear-gradient(135deg,var(--data) 0 4px,var(--power) 4px 8px)}
+.w .none{background:transparent;border:1.5px dashed var(--line);width:5px}
+.count{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.count div{border-radius:14px;padding:14px 16px;background:var(--bg)}
+.count strong{display:block;font:700 38px/1 var(--display);margin-bottom:4px}
+.count span{font-size:13px;color:var(--muted);line-height:1.3;display:block}
+.k-d strong{color:var(--data)} .k-p strong{color:var(--power)}
+
+/* Sections */
+section{padding:64px 0}
+section>.wrap>h2{font-size:clamp(30px,4.5vw,48px);max-width:20ch;margin-bottom:12px}
+.intro{color:var(--muted);max-width:60ch;margin-bottom:40px}
+
+/* Architecture : 3 blocs asymétriques */
+.arch{display:grid;grid-template-columns:1.3fr 1fr;gap:20px}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:28px}
+.card h3{font-size:26px;margin-bottom:10px}
+.card p{color:var(--muted)}
+.card.big{grid-row:span 2}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.opt{border-radius:14px;padding:16px;background:var(--bg);font-size:15px}
+.opt b{display:block;font-family:var(--display);font-size:18px;margin-bottom:4px}
+.opt.yes{box-shadow:inset 0 0 0 2px var(--ok)}
+.foot-lg{display:inline-flex;align-items:center;gap:12px}
+.foot-lg img{width:34px;height:34px;display:block}
+.chip{display:inline-block;font-size:13px;font-weight:600;padding:3px 10px;border-radius:99px;margin-top:10px;background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+ul.plain{list-style:none;padding:0;margin-top:14px;display:grid;gap:8px;font-size:15px}
+ul.plain li{padding-left:22px;position:relative;color:var(--muted)}
+ul.plain li::before{content:"";position:absolute;left:0;top:.6em;width:10px;height:3px;border-radius:2px;background:var(--data)}
+
+/* Comparatif */
+.scroll{overflow-x:auto;background:var(--surface);border:1.5px solid var(--line);border-radius:20px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:16px}
+th,td{text-align:left;padding:16px 20px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-size:18px}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600}
+td.good{color:var(--ok);font-weight:600}
+td.warn{color:var(--power);font-weight:600}
+
+/* Recommandation */
+.reco{position:relative;overflow:hidden;background:var(--ink);color:var(--bg);border-radius:28px;padding:clamp(28px,5vw,56px)}
+.reco .orb2{position:absolute;right:-110px;bottom:-110px;width:min(48vw,380px);aspect-ratio:1;opacity:.95;pointer-events:none}
+.reco .orb2 img{width:100%;display:block}
+.reco>*:not(.orb2){position:relative}
+.reco h2{font-size:clamp(28px,4.2vw,44px);margin-bottom:28px;max-width:22ch;color:#f2f5f7}
+.reco ol{list-style:none;padding:0;display:grid;gap:0;counter-reset:s}
+.reco li{counter-increment:s;display:grid;grid-template-columns:48px 1fr;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.18);color:#c8d6e0}
+.reco li::before{content:counter(s);font:700 30px/1 var(--display);color:var(--brand)}
+.reco li b{color:#fff;font-family:var(--display);font-size:21px;display:block;margin-bottom:2px}
+.reco .end{margin-top:24px;color:#c8d6e0;max-width:46ch}
+@media (max-width:820px){.orb{opacity:.22;right:-120px}.reco .orb2{opacity:.35}}
+
+footer{padding:40px 0 64px;color:var(--muted);font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px}
+
+@media (max-width:820px){
+  .lab,.arch{grid-template-columns:1fr}
+  .card.big{grid-row:auto}
+  .opts{grid-template-columns:1fr}
+  .count{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .count strong{font-size:30px}
+  header.hero{padding-top:48px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <a class="lg" href="#" aria-label="Topline"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//gA8Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAwCv/bAEMABAMDAwMCBAMDAwQEBAUGCgYGBQUGDAgJBwoODA8ODgwNDQ8RFhMPEBURDQ0TGhMVFxgZGRkPEhsdGxgdFhgZGP/bAEMBBAQEBgUGCwYGCxgQDRAYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGP/AABEIAQEBaAMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APv6iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKw/Ffi/w74J8PSa14l1OKxtF4XdlnlbsiIOXY+gFfKHxD/aK8YeLnl07wo03hfRiSvmxkG+uF935EI9ly3+0KuEHLY9jKcixuaz5MLC66vZL5n0p45+Lvw9+HS7PFHiKCG8Zcx6fbgz3UnpiJMt+JAHvXgniX9rfxLeu8PgLwJDZxdFvvEU3zEevkRHP4FxXgcNtBBJJMiEzSndLM5LySN3LOclj7k1OOldMMMvtH6flvhphqaUsbUcn2Wi+/f8jo9Z+Kfxs8SMx1P4n3unxn/lholrHaKB6BsFj+Jri77SLzVmLa14t8U6mT1+16rK4/LOK0xS1uqMF0PraHCOUUVaOHT9dfzOUf4c+GJG3PBdM3943DE/qafD4IgsTv0jxBr+muOhtr1lx+X+NdRRT9lDsbT4YyqatLDx+4q6d4k+N3hkq3hr4v626pyINRkM6H6791d7of7X3xs8KMqeOPCGl+JrNfv3ViDbzY9fkyv/jgrjKKzlhoPbQ8HHeHmV4hN0U6b8ndfcz6r+Hn7Xfwe8eSxWNzq0nhrVHIX7JrIESs3osoJQ/iQfavd45I5oUlidZI3AZXU5DA9CD3FfmBrfhDQdeRjeWSpOf+W8Pyv+Pr+NTeDfiP8YvgTcrJ4a1h9d8No2ZNKvd0kQXvhc7oz7oceormqUJR1PzfO+BsflqdSC9pBdVuvVH6d0V418F/2k/AXxktUsrOc6R4jVMy6PeON7erRN0kX6cjuBXstYHxYUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAVwXxQ+KmifDTQBNdYu9VuFP2PTkbDSH+8x/hQdz+Ayas/Ez4jaV8N/B0mqXm2a9lzHZ2e7DTSf0UdSf8a+FPEXiLV/FfiW517XLtrm9uW3Mx6KOyqOyjoBWtOnzas+24S4Snm8/b19KK/8AJn2X6st+LPF/iDxx4mfXPEl811cHIijHEVuh/gjX+Efqe5NZC/dqIdalX7tdsUkrI/dsJhKOFpKjQioxXRDx0pV6Ug6Uq9K0R1DhT445Jm2wxvI3oilj+lfRX7M3hLw7q+j6zrGraTa311FcLBEbmMSCNduTgHgEk9a+jLfStLtQBa6daQgdBHEq/wAhWE8Qou1j87zvxBhluLnhIUXJxdm72/Rn5+2nhXxPfkCy8O6rPn+5auf6VW1jR9V8P6lFp+u6fcaddzRedHBcoUdkyRuAPbINfouAAMCvjX9qY/8AGQ+jD/qBj/0dJTpV/aStY58i48r5pj4YV0lGMr9W3+h5LRRRXQfpwUUUUAcX4i8EGW9TXfDE76bq8DiZGgcx5cchlI+42e4r6X/Zz/azk1nULf4c/FydbTXAwt7PWJhsW6boI5uyyHs3RvY9fHK5Txl4Og8RWZurULFqUQ+R+nmAfwt/Q9q5a1C/vR3PzXi3ginioyxeAjaotXFbS9PP8z9T6K+Ov2TP2kLrV5ofhJ8RrxhrEA8nSr+5b5rgL/ywkJ6yAfdP8QGOo5+xa4T8TlFxbjJaoKKKKCQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArP1zWtO8O+HbzW9WuFgs7SIyyuewHYe56Ae9aFfKf7UPxDa81iH4f6ZOfs9rifUCp+/IeUjP0HzH3I9KqMbs9nIconmuMhho7bt9kt/8AgeZ5D8Q/Hmp/ETxxca7flkg5jtLbORBEDwv1PUnua5YVGnapBXZFWP6RwmGp4WlGhRVoxVkh461Kv3aiHWpV+7WqOpDx0pV6Ug6Uq9KtFH1T+yr/AMiRrv8A1/L/AOgCvfq8B/ZV/wCRI13/AK/l/wDQBXv1edX+Nn828X/8jnE/4v0QV8Z/tSn/AIyL0gemhj/0dJX2ZXxl+1If+MjtKH/UCX/0dLWmF+M6eB/+RxS+f5HlFFFFd5/RYUUUUAFFFFAHA+P/AA7OGj8V6K8lvqFmyyO8BKv8pysikdGUgc/4V96/sy/GyL4xfChG1KVF8TaTtttTjHHm8fJOB6OBz6MGHpXyOVVlKsAVIwQe4rkfh34zu/gH+0nYeIIWkGhXTeTeRL0ktXYbxjuUOGH+6PWuLE0re8j8a8Q+HVRmsyoLSWkvXv8APr5n6p0VFbXNveWUN3azJNBMgkjkQ5V1IyCD6EGpa5D8sCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAMfxX4gtfCvgrU/EV4R5VlbtMVJxuIHC/icD8a/OjU9TvNa1u81fUJTLdXcrTyue7Mcmvq79q3xK2n/DzTfDUMmJNTufMlAPWOLnH03Ffyr5GX7tbU1ofs/hzlqpYOeMktZuy9F/wfyHp2qQVGnapBXQj9KQ8da9A+DvhTSfGnxTtdA1tJWs5YJZGET7Gyq5HNefjrXrf7OP/Je7D/r1n/8AQauTtFnk8Q1p0csxFSm7SUXZrdHu3/DNnwzx/wAe+p/+BZ/wpR+zZ8M8f8e+p/8AgWf8K9eorh9rLufz9/rHmn/QTP8A8CZy/gnwB4f8Aabc2Ph6O4SK5kEsnnSmQ7gMcV1FFFS227s8qvXqV6jq1ZOUnu3uwr4x/aj/AOTkdM/7ASf+jpa+zq+MP2of+TktO9tBT/0dJXRhPj+R9TwMv+Fil8zwzxd4qsPCHhuTVb0eY2dkMIODK/p9O5NfP2q/F3xtqN60sGpmwiz8sNsoAUfXGTXXftAST/bNFhOfI8uRh6FsgH9MV4tTr1JczSPa444kxv8AaE8HRm4QhbZ2u7Xu7Hr3gz406rDqcVj4qdbu0kYL9qChZIvc44YfrXvasrorowZWGQw6EetfE1fW/gGWeX4ZaHJckmQ2qjJ6kDhf0xWmHqN+6z3vDzP8XjJVMJiZOXKrpvfta50dFFFdR+pBXI/EXRhqng+S5jTM9kfOXjkr/EPy5/CuupskaSxNFIoZHBVge4PWpnHmTRw5ngYY7C1MNPaSa/y/E+m/2MfiK/jX9nmLQ7+cyal4bl+wOWOWaAjdCx/4Dlf+AV9F1+cv7GniOTwZ+1Vf+DLiUra6zbS2m1jx5sR8yNvrtDj/AIFX6NV5TVtD+Wq9KVGpKnLdOwUUUUjIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD4v/al1hr/AONcWmB8x6dYRpt9Gclz+hX8q8VX7v4V3fxvvGvf2gvE8jHPl3IhH0VFFcIv3fwrojsf0nw5QVDLMPBfyp/fqx6dqkFRp2qQVsj3ojx1ruvhL4u0/wAD/FOw8QarHK9miSRSmIbmUOMbgO+PSuFHWpV+7WlrqxjjMJTxlCeHq/DJWfzPtP8A4aN+Fn/QVvf/AACk/wAKX/hoz4W4z/at7/4BSf4V8XDpSr0rP6vA+G/4hrln88/vX+R+gXg3x54c8eafc3vhy5lnht5BFIZImjIYjPRhzxXS14D+yr/yJGu/9fy/+gCvfq5KkVGTSPyTPsBTwGYVcLSbcYuyvuFfGH7T/P7Slh7aCn/o6Svs+vi/9p//AJOVsf8AsAx/+jpK2wnx/I9jgX/kcUvmfP8A8QPBkXjTwx9jV1ivYG8y2lboG7qfY/4V82ar4Q8S6NeNbX+j3cbA4DCMsrfQjg19f0V0VKCm7n6txFwXhs5qrEczhPZta39UfMngz4Wa/wCIdTil1CzmsNNVgZJpl2s49EB5JPr0r6Xt4IbW0itbdBHDEgjRB0VQMAVJRVU6Sgehw7wzhskpyjSblKW8n+XkgooorU+jCiiigDhLbUz4O/as8K+Jo22ImoWk7t/slxG//jufzr9X6/Ir4rp5WraTdrwQjDP0YGv1m0O8Oo+F9N1AnJubWKYn/eQH+teZWVps/mzi/Dqhm9eK73+9XL9FFFZHzQUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH55fFnP/AAvTxXnr/aMn9K5Jfu/hXe/HGyaw/aD8TRsMeZcCcfRkU1wS/d/CumJ/TeTTU8BQkusY/kh6dqkFRp2qQVqj1ojx1qVfu1EOtSr92tUWh46Uq9KQdKVelWij6p/ZV/5EjXf+v5f/AEAV79XgP7Kv/Ika7/1/L/6AK9+rzq/xs/m3i/8A5HOJ/wAX6IK+L/2n/wDk5Wx/7AMf/o6SvtCvi/8Aaf8A+TlbH/sAx/8Ao6StMJ8fyOzgX/kcUvmeV0UUV3n9EBRRRQAUUUUAFFFFAHmPxd/1el+v7z+lfqp4HVl+GHhxW+8NLtgfr5S1+VXxRV7vxDounRKWkkBAUdyzhQK/WnTbQafo1pYL923hSEf8BUD+lebX+Nn86ccSUs5rW6W/JFqiiisT5IKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD4y/ao0drH4y22rBMR6jYId3q8ZKH9NleJL938K+v/2qvDLal8M7HxFBHul0q5AkIHIik+Un8G2/nXyAv3a3g9D+geCcasTlNNX1h7r+W34WHp2qQVGnapBW6PsIjx1qVfu1EOtSr92tUWh46Uq9KQdKVelWij6p/ZV/5EjXf+v5f/QBXv1eA/sq/wDIka7/ANfy/wDoAr36vOr/ABs/m3i//kc4n/F+iCvi/wDaf/5OVsf+wDH/AOjpK+0K+L/2n/8Ak5Wx/wCwDH/6OkrTCfH8jr4F/wCRxS+Z5XRRRXef0SFFFFABRRRQAUUUyWWOC3knlYLHGpdiewAyaBSkopyeyOX8L6SfGn7ZXhHQEQyRRX9sZQOQEiPnPn8Biv1Pr8//ANh7wvL4m+O/iP4j3cRMGmW7RQuR0nnP9I1Yf8CFfoBXkzfNJs/lvOcZ9cx1bEfzSb+V9AoooqTzAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAMvxJodp4m8JajoF8Abe9geB+M4yOD+Bwfwr86NZ0e98P+Ir7Q9RjKXVlM0EgPqpxn6HqPrX6V18uftRfDto7mD4h6Xb/u3C2+ohB0PRJD/wCgn/gNaU3Z2P0Dw/zlYTFvCVH7tTb/ABLb79vuPmtO1SCo07VIK6kfuKHjrUq/dqIdalX7taotDx0pV6Ug6Uq9KtFH1F+yncBvDPiK1yNy3Ub49imP6V9C18l/swa6lh8SNQ0SVwq6ja7owT1eM5x/3yW/KvrSuDEK02fzvx1hnQzms3tKzXzX+dwr5H/aw0S4svij4a8VlG+yXlk+mvJ2WRWLqD9Qx/Kvriuf8aeDNC8e+Drrw34htvOtJ8EMpw8Tj7roezA96mjU5JXZ5GRZn/ZmOp4q11F6+h+fdFez61+zF480y8aPRL/T9bs8/u5JH+zzAf7an5SfcHn0FeaeLvB/iLwLrFvp3ijTXspLkEwSZDxTY6hXHBI9OtehGpGWzP6Fy/iTLcfyxoVk5Pps/uZh0UUVZ7gUUUUAFcb8SNaGm+E2som/f3p8sAddg+8f5D8a7B3SONpJGCooLMxOAAOppnwA+H0vxy/aRXWdQt2fwp4eZLibevySlTmKL3LsNxH90H2rDET5Y27nxfHGdLL8vlSi/fqaL06s+xP2Xvhs3w0/Z00ixvbfytW1POp34I+ZXkA2of8AdQIMeua9loorzj+ewooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAqnqul2OtaLdaTqdulxaXUZiliYcMpGDVyigcZOLUovVH5+/E34eaj8OPHMukXAeSxlzJY3RHEseehP94dCPx71xwr9CfiB4D0b4heD5tE1ZNr/ft7lR88EnZh/UdxXwv4y8Ga54F8UzaHrtuUlXJimUfu50zw6HuP5V1058yP3vg/imGa0VQrO1aO/95d1+pgjrUq/dqIdalX7tdCPuEPHSlXpSDpSr0q0Uanh3W7zw34psNesDi4s5lmUdmweVPsRkfjX334X8Sab4t8J2Wv6VKHt7mMNjPKN3U+hByK/PIV6H8Lfitqvw41hlCNeaPcMDc2ecEH++no36Gsq9LnV1ufD8bcMSzaiq+HX72HT+ZdvXsfcVFc94U8b+GfGulrfeH9UiuBjLwk7ZYj6Mh5FdDXntNaM/Bq1GpRm6dWLUlunowryH9pjQbfWf2c9aunjX7Tpfl39vJjlGRxnH1UsK9erxn9p/xFBo37P2oaX5i/bdakjsLaPPLZYM5x6BVP5iro351Y68pVR42iqXxcy/M+PoZPNto5f76hvzFPpkUYigSMdFUL+Qp9eof1NG9lcKKK5jxF4gvV1G38L+F7WXUfEN84hgtrdd7KzcDj+96D8TUzmoq7OLMsyoZdh5YjEStFfj5LzKuvya14w8V2Pw18G2z3mrajKIZFj6LnsT2AHzMewFfot8G/hXo/wf+FFj4R0zZNcKPOvrwLg3Vw33nPt0AHYAVwH7NX7PFr8IvDr+IPEQivfGmpx5u7jO8WiHnyYz3OfvN3PsK9+rzKk3N3Z/OGfZ1VzfFyxFTbZLsgoooqDxQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK5nxv4E8P+PvDb6Rr1qHAy0NwnEkD/AN5T/Toe9dNRTTtsa0K9ShUVWlK0ls0fBvxG+Evib4c6izXsJvNKZsQ6jCp2H0Dj+BvY8ehrhl+7X6S3dpbX1nJaXtvFcW8qlXilUMrg9iD1rwLx7+zLpuoNLqPga6TTrg5Y2FwSYGP+y3VPpyPpXVTrraR+vcP+IdKolRzP3ZfzLZ+q6fl6Hy0OlKvStvxL4N8TeD742niLR7mxbOFkdcxv/uuOD+dYi9K6k7rQ/TaGIpYiCqUZKUX1TuOFLSClqzoJ7O9vdOvUvNPu57W4TlZYHKMPxFei6P8AH34m6RGsZ1qLUEUYAvoBIf8AvoYY/nXmdFS4p7o4MZleDxv+80oz9V+p7cv7UHjsR4bStEZv7wjkH6bq8r8YeLdf8d+J11zxNfG6niUpbxKuyK3U9RGnbPcnJPrWLR2z29aUYRi7pHJhOHcswVT21CjGMl1CkJAUkkADkk9qxbnxPYrqSaTpUNzrWqynbFYabGZpHb0+XpXqvgj9lj4lfEWWK/8AiXeHwd4fYhv7ItWD3s6+jnkR/jk/7NROvGJ5ed8Z5flicVLnqdl+r6Hk1pceJvHnitfBfwv0uXV9WkOJbpB+5tV6F2c8AD+8ePTJr7R+Af7N3h/4PWR1vU5U1vxjdJ/pOqSDKw56pCDyB6seW9hxXpXgT4d+Dvhr4XTQPBmiW+m2gwXKDMkzD+KRzy7e5NdRXBUqObuz8RzziDF5xW9piHotktl/XcKKKKg8MKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAK97Y2WpWT2eoWkF3byDDxTxh1Ye4PFeUeJf2cPh9rjPPpiXeg3Dc5snBjz7xvkflivX6KpScdmdmEzDE4OXNhqji/J2Pk3Wf2WvGVo7toXiDR9TjH3VuVe1c/kHFcZffAz4w2DH/iiGvFH8dlqFu4P0Dup/SvuWitViJrqfT0OPs5pKzqKXqkfAMnwx+K8bbT8MfETH/ZEBH5+ZUsHwi+NV4221+F2oLn+K7v7WAD65kzX3zRQ8TM2n4h5xJWUor/t1HxLp37M/wAb9VYfbJfCnh2I9WluJL2Qf8BRQufxNd5oX7GPh53Wb4geONd8RdzZWm2xtj7ELlmH/AhX093orOVSUt2eDjuI8yxqtXrNrtey+5HL+Dfhx4F+H2n/AGPwb4W03SEIwz28IEkn+9Ifmb8TXUUUVB4gUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUVynxE+Inhz4X+Cn8VeKXuk09JkgJtoTK+5zgfKO3FeW6Z+2J8GdX1yy0mzuddNxeTx20QfTmA3uwVcnPAyRRYD32iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiivPvjpdXNl+zh4zu7K5lt7iLS5Wjmhco6HHUEcg0Aeg0V+Pg8d+OMD/isvEH/gwm/+Kr6O/Y8+Knja7+Nw8F6x4h1DVdJv7OaQQ307TeTLGNwZCxJXIDAgcHI9KrlJ5j71oooqSgoor4r/AG4vEGv6L4y8IR6Preo6ckllcM62ly8Qch1wSFIzTSuD0PtSiviv9hzxBr+teMvF8es65qOopHZW7It3cvKEJdskBicV9qUmCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA+ev20f8Ak1q5/wCwna/+hGvgLwHz8VvC4H/QXtP/AEclZ134i1vU7Y2t/r+o3sOQxiuLt5VyOhwSRVJJHilWWORo3QhldTgqR0IPY1aViGz9oKK/HJvGXijYf+Ku1np/0EZf/iq/XHwXI8vw28PSyOzu2mWzM7HJYmJcknvUtWKTublFFFIYU13SOMvI6oo5LMcAV4R+0B+0lo/wgt/7B0e3i1bxXPHvS1Zv3Vop6PNjnnsg5PXgdfgrxr8WviL8QdQkuvFXizULpGJItY5TDbxj0WNcKB+vvTSE2fq7/b+hGXyv7a07f02/aUz+Wa0EdXQOjBlPIKnINfi7sG3zdnHXfjj867jwT8X/AIkfD3UI7nwv4s1CCNSC1nNIZreQejRtkflg+hp8ouY/WuivDPgD+0dovxhsm0bUoItJ8VW8e+WzDZjuUHWSEnnjup5HuOa9zqSgooryr9pO6ubL9lfxjdWdzNbTx2qFJYXKOp81OjDkUAeq0V+Ov/CXeLP+hq1z/wAD5f8A4qva/hX+1J4u+Hnw38RaVf391r1/KIhoy6jI0q2rHcJGZiclQNpCZ6+nNVyk8x+jVxdW1pF5t1cRQJ/flcKPzNQWuraVeyeXZanZ3L/3YZlc/oa/InxZ468YeO9Zk1HxZ4iv9VuJCTtmlJRR6LGPlUewFYlnd3On3S3On3U1pOh4lt5DGyn6rg0cocx+ztFfB37Pv7WOu6T4gs/CHxP1J9S0e5dYINXuDmazYnC+Y38ceeCTyvXJFfeAKsoZSCCMgjvSasNO4tVNT0vTta0e40rV7KC9sblDHPbXCB45VPVWU8EVbopDPz2/bO8D+EfBXj7wvH4S8PWGix3dhM08VjEIkdlkUA7RxnDHmuf/AGOv+TsdH/687v8A9Emu9/b3dU+IXgzcf+Ydcf8Ao1K8/wD2OZEb9rLRwDz9ju//AESavoT1P0soooqCgrh/Hfwg+HfxMvbO78beHU1SazRo4GaeWPYrEEj5GGeQOtYH7S93c2H7KfjK7tLqa2mjtYys0LlHX9/GOGHIr8yf+E08Uf8AQ165/wCB8v8A8VTSE3Y/VXwJ8IPh38M728u/BPh1NLmvUWOdlnlk3qpJA+djjknpXcV8N/sU/E3xbqnxL1TwTrGu32qaZJp7XcMd5M0pgkR1GVZskAhjkdOAa+5KGCdwoorwb9sG+vdO/Zdv7rT724s5xf2gEtvK0bAGQZGVINIZ7zRX46/8Jd4s7eKtc/8AA+X/AOKr6T+Bn7Tmq+B/g/4rPjPVLnXpbJoV0S2upi0sksgYGPecny12hjnp26iq5SeY+9JZYoYjLNIkaDqznAH4mqcOuaLcTeVBq9hLJ02JcIx/IGvyi+IHxc8ffErWJb/xX4iupYmYmOxhkMVtCP7qxg4/E5J7muJibypFlgYxuvIeM7SPoRRyhzH7RUV+fP7Nf7SXiXw14503wV401i41Tw5qEq2sM15IXksJGOEIc8mMnAKk8ZyO4P6DUmrDTuFFFFIYUVzvjnxt4f8Ah54GvvFnia7FvYWi5OOXlc/djQd2Y8Af0r87Pir+1B8R/iRqVxb2Op3HhzQCSItO0+Uo7L/01kGGc+wwvtTSuJux+k8+taNay+Xc6tYwv/dkuEU/kTVmC4t7qIS208UyH+ONgw/MV+OlroXiHXVkvbPRtU1QDl54reSf82ANaPhbx1418Bayt74X8RanpFxE3McUhCHH8Lxn5SPYinyi5j9f6K8I/Zy/aEtvjDoc2ka3FDZeK9PjD3EMXEd1HkDzox25IDL2JHY8FSUcX+2zoXh7RP2aoLzS9C0yxnOtWyGW2tUibBSXIyoBxwK+E/Al1HP8VfDEEqpJHJq1ojI4yGBmUEEHqK+8v2/JfJ/ZStn/AOo9aj/yHNX52fDq+3fGLwkM9dasx/5HStIrQhrU/Zv/AIQrwaevhLQv/ACL/wCJrbjjjiiWKJFREAVVUYCgdAB6U6isywrnfHniu18DfDPXPF16A0WmWclxsJxvYD5V/FsD8a6KvBP2yru4tP2QfELQEgPNapJj+6Zl/qBQgPzp8Qa/qfijxTqHiLW7s3OoX87XE8rHqzHOB7DoB2AFfZv7Mn7MPh+fwdY/EP4i6ampXV+gn0/S7gZhhiPKySL/ABsw5APABHGenwNa30ct/bxTMPLeVFfnsWAP6V+2Okw29toFjb2gAt47eNIgvTaFAGPwxVy0IiVT4W8MtYfYW8O6SbXG3yPskezHptxivkn9p79mPQNP8IXvxF+HWnLp0lkPO1LSoB+6ki/iljX+Bl6lRwRk8Ec/ZlUNdt7W88L6laXyq1rNayxzBuhQoQ2fbBNSmU0fkB4a8Sap4R8Xad4m0O6NvqGnzrcQyKe4PQ+oIyCO4Jr9cfBniez8afD3RvFdgALfU7SO6Vc52llyV/A5H4V+LR1EBiFfIB4PtX6o/sg3U93+x54TknYkqLlFz/dFxIB+lVJExZ7jVLVtI0vXtGn0jWtPt7+wuF2zW1ygeOQZzgqeDyBV2ioLPzn/AGyfB/hjwd8aNGtPCuhWWkW9zo6zzQ2cYjRn86Rd20cZwoH4V5B8NfAuofEn4p6P4M01/KkvpsSTkZEMSgtI5HsoP1OB3r3f9vCRU+Onh0N/0AV/9KJqz/2HUtLj9oy+lkx50OjymLPvIgOPwq+hHU+1vA3we+Hfw+8PQ6V4f8MWAKKBJd3EKyzztjlndhkk+g4HYCuJ+N/7OXg74keDby50bRrLSvFEETSWd7aRCLznAyI5QvDK3TJ5Gcj0PuFFRcux+ME0MtvcS29xG0csbGORG6qwOCD9Dmv05/Zb8b3Hjj9mvRri/maa+01n0y4kY5L+VjYx99hT8c1+evxkWzsv2h/HFpaACCPXLtUC9APNbivsD9g2d5fhF4mTJ8tNXG0emYVzVvYhbn1hRRRUFnwH/wAFCbjyfiN4IGeum3P/AKNSvOv2K7rzf2v9GTn/AI8rz/0Sa7H/AIKOzmH4leBMHGdMuv8A0alea/sNXJl/bO0RN2f9Bvf/AESa0Xwk21P1aooorMoo6vo+leINEuNH1vTrbUNPuAFmtbmMSRyAEEBlPB5AP4V+b37bPhbwt4G+OOi2XhTQrLR7a60ZbiaCyjEaNJ50i7to4BwoH4V+l9fmv/wUTuDD+0P4ZUHGfDyn/wAmJqqG4mrjv2ELnzf2m7tcn/kCzn/x+Ov0mr8w/wDgn9cmX9qa8XOf+JHOf/Ikdfp5RPcEtArN13w9ofifR20nxFpNnqli7K7W13EJIyynIO08ZBrSoqRn5kftW+GvD3hL9pK+0rw3pVrpdibK3m+zWqBIw7KckKOBnA6V5n4I8Iav8QPiBpfhDQEV77UJvLVm+7GoGWdsfwqoJP0r0r9t+98j9ra9jzj/AIldof8Ax1q6j9gGztdU+OPiLVZlDzafo4WEn+EyyqCR74Qj8TWnS5HU+rvh5+zL8KfAeiQQy+HLTXtUCjz9S1SITM7d9qNlUX2A+pNefftUfAzwM3wS1Pxt4d8P2Oj6xo4W4aSxiEKzw7grq6rgHAO4HGeMd6+pK8r/AGlH8v8AZK8fSemkSn+VQtyrH5YrMYnEsUmx0O5WB5BHINfsZ4Wvn1TwLoupyHL3VhBO31aNWP8AOvxPbUvkPzdq/aL4eHd8IPCjeuj2h/8AICVUlYmJ0lFFFQWfAX7bvxAudX+K1l4At7gjT9FgW4njB4e4lGQT/uptx/vH1rgP2avhv4a+IfxYd/GV7aQ6BpMQuriG4nWIXTlsJFkkcHBJx2XHeuQ/aa1Kb/hrfx2JmO5dR2DP90RoF/QCuS8HeBPH/wAQ47x/BHhTUdeWzKi4Nmobyi2duckddp/KtLaGbep+u9hrngfStOi0/TNZ0CztIVCxwW9zCiIPQKDgV8p/tm+DfAuo+D7b4jeHb7SP7bguktr4Wc8Za6ifIDMFPLK2OeuGOegr5c/4Z6+Pf/RKfEP/AH6X/wCKo/4Z7+PYPHwp8Rf9+l/+KpKPmNt9iX4PeMbjwJ8cvDXiW3mMaQ3qRXABxugkOyQH22sT+FFJD+z38fDcRj/hVviGPLAbzEvy89fvUU7JiTZ9lft/afc3v7Hk9zAhZLHWLS5lI/hQl48/99SLX5c+H9Zk0HxfpWuonmtp95DdhM43GNw+P0r9x/HXg3R/iD8ONZ8F69Gzafqtq9tKV+8mRw6/7SnDD3Ar8cPjJ8CvH3wT8YT6V4o0qZ9OMhFnrEKE212mflIborY6oeR+tKMraGh+xPgH4geFfiX4GsvFfhHVre/sbqNXPluC8LEZMci9VcdCDXT1+CGma3rOiXDT6Nq19p0rDBks7h4WI9ypFftT8Abm4vP2XPh/dXdxLcTy6DaPJLK5d3YxLkljyT7mpaA9GrgPjf4Gl+JH7PfizwZbAfa76wf7Ln/numJIvzdFH4139FID8FLmS6tLuazu4ZIZ4XaKWJxhkYHBUjsQRX6tfskftDaD8V/hRpvhjU9Rhg8ZaPbLbXVpKwVruNBtWeMfxAqBuA6HPYivKP2uf2OdR8Va7efFH4T2Kz6ncZl1bQ0wrXL95oOxc/xJ/EeRySD+fLprPhrxCUkW/wBI1Wyl5B3QT27j8mUitG1JCsfvdXzJ+2B+0NoPwx+FGp+DNI1KG48Y61bNaRWsLhms4ZBteaTH3flJCg8kkHoDX52N+0b8dm0b+ym+K/in7Lt2bftzbsf7/wB79a4C3g1rxN4iWC2hv9X1W9k4RA0887n82YmpS7jJLM3l/f2+n2MElxdXEiwwwxjLSOxAVQO5JIFftj8HfBLfDn4EeFvBcuDcabp8cdwRyDMRuk57/Mzc18sfsi/sd3/gvWbT4ofFWzSPWoRv0vRGIb7GxH+umxx5gH3V/h6nnAH2/RKVxJBRRRUjPzt/4KA3HlfHzw2vr4fU/wDkzNXi/wAAfirD8Kvj5oniu+LHTNzWmoBRkiCQbWYDuVO1sd9uK9T/AOCis5i/aF8MAHGfDqn/AMmZq+ZvBHgvxV8RL3VLDwjYtqN/p1g+ovZxH97LEjKH8sfxMNwO3qcHHPFaq1iGtT9tdM1TTta0a21bSL2C9sbqMTQXMDh0kQjIII6iuV+KnxN8N/Cb4a3/AIt8R3ccawxsLW2LDzLubHyxIO5Jxn0GSeBX5AeFfjF8Uvh5BLpnhPxvrmhwhyJLOGYhFbPP7tshTnrwDWN4o8f+LfG2rDU/GHibUtbu1GFlvrhpCg9FB4UfQClyDuamseIbvXPEN/rV/Juur64kupm/23Ysf1Nfpn+xd4SufDX7LWn6hexGO41y5l1MKwwRE2Ejz9VQMPZhXxD+zT+zX4o+NPiy01jWLK507wNbSh7u/kUob0A/6mDP3iehYcKM98Cv1ds7O107TrewsYEt7W3jWGGGMYVEUYVQPQAAUTfQIonooorMo/Ob/gpQcfEjwH/2Dbn/ANGrXmH7CLgftq6EGYAmxvQMnr+4b/CvW/8AgpVpV+PE/gPXBbSGw+y3NqZwPlEu9GCk+pGSPoa+FrK/vdNv4r7Tru4s7qI7o57eQxuh9Qw5FWnpYD99qK+bP2F9V1TWf2RLK+1jUrzULo6pdqZ7uZpXIDDA3MScV9J1ABX5mf8ABR44/aK8M/8AYup/6UzV+mdfmx/wUj0q/i+NXhLW2tpBYT6KbWOfHymVJ5GZc+oEiH8acdwOc/4J6Oo/auu1LAFtDuMAnr88dfqVX4Gafqeo6TfpfaVf3VjdJnZPaytE654OGUgiv14/Yy1LUNW/Yz8K3+qX91fXUj3e+4upWlkbFzIBlmJJwABTkB73RRRUgflR+3rcNF+2PfKOn9lWf/oLV33/AATdmaX4qeOM/wDQKg/9HGvOv2+j/wAZk3v/AGCrP/0E16B/wTXP/F0/HH/YKg/9HGrb90Vj9Hq8k/agJH7HnxDI/wCgPL/SvW68w/aM0q/1v9lDx/pmmW0lzdy6NOY4YxlnKjdgDucA1Az8XGu3Kke1fuT8M3WT4KeD5FYMraJZEEHIP7hK/CvNfV/7B3iTxDdftYaVotzr2qTaZHpd2EspLqRoVwnGIydox9KuTuB+p1FFFQB+XX7e3ge98KftKDxdHAw03xNapMsoHy+fEqxyL9dojb/gVcv+yH8eLD4OfGyQeJZmi8N67CtlfTYJFs6tmKYgdlJYH2cntX6T/Gz4O+HPjd8Kbvwdr+YJc+fYX6Ll7O4AIVx6jkhh3BI9CPyM+LPwU+IPwY8VSaP4z0WWKAuVttThUva3a9mSTpnH8Jww7itFK6sxWP2wsNQsdV0uDUtMvILyzuEEkNxbyB45FPQqw4IqS5urays5bu8uIre3iUvJNM4REUdSSeAPevw48IfFn4l+AYGg8GeOdd0WBjkwWl2yxZ9dmduffFL4u+LXxM8eQ+R4x8da9rMHX7PdXbtFn12Z25/CpsM/YPwF8dvhl8TfH2u+EPBXiGPU7/RkSSd41/dTKTgtE3/LQKcAkcZYYzmivzo/Y6+FXxm1L43aF8QPBthJpWiWM3+matqCslvcQHiSFB1lLKSBt4BwSRiikwP1fqvfWFjqenyWOpWVveWso2yQXEYkRx6FWBBqxRSA8q1D9mn4B6neNdXfwn8MGVjkmK0EQ/JMD9K9I0jSdN0HQbPRdGsobLT7OFYLa2hG1Io1GFVR2AFXaKACiiigArjvGnwo+G3xEQDxt4J0bWnUYWa6tlMqj0EgwwH0NdjRQB4IP2MP2cBd/aP+FeRHnPlm9uNn5b69N8GfC34c/DyEx+CfBejaIWGGltLZRK49GkPzEfU111FABRRRQAUUUUAfmb/wUfJH7RPhf/sXE/8ASmesb/gnqc/tY3X/AGArn/0ZFWx/wUh4/aI8L/8AYuJ/6Uz1jf8ABPP/AJOxuv8AsBXP/oyKrvpYD9AfHP7P3wb+I+oPqPi7wBpN5fv969jQwTP7s8ZUsfrmsLw9+yd+z54Z1BL2x+GumXE8bBka/Z7oA/7sjFfzFe0UVFwI4IILa2jt7aGOGGNQqRxqFVQOgAHAFSUUUAFFFFAGdregaH4l0eTSfEWjWGrWEhBe1vrdJ42I6EqwIzXFf8KB+CP/AESjwh/4K4v/AImvRqKAMnw54X8O+ENDXRvC2iWGj6crtILWxhWKMM3U7VGMmtaiigArK1/wz4d8V6QdL8T6Dpus2JO77NqFsk8eex2sCM+9atFAHnP/AAoD4I/9Eo8If+CuL/4mu00Hw9oXhbQIdE8N6RZ6VpsG4xWlnEIo03EscKOBkkn8a0qKACiiigDj/Efwo+Gfi/XG1nxT4D8P6xqDIsbXV9YxzSFV6DcwzgVY8LfDjwD4IvLi68H+DtF0Ke4QRzSafaJC0ig5AYqBkZrqKKACiiigDg9Q+CPwe1bUZb/Ufhh4TuLqVi0kz6XDucnqSdvJ96t+HfhP8MvCOuLrPhfwF4f0fUURo1u7GxjikCtwRuUZwa7GigAooooAKp6npOl63pcumazptpqNlMNsltdwrLG49CrAg1cooA8Q1j9kL9nbWrtrmf4a6fbSMct9illt1J/3UYAfgK0vDP7L3wD8J3kd5pXwy0Z7mM5WW+Rrsg+oEpYfpXrtFADY4o4YVihjWONBhUQYCj0Aop1FABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB+Zn/BSH/k4jwv/wBi4n/pTPWL/wAE8/8Ak7G6/wCwFc/+jIqKKfQD9TaKKKQBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf/2Q==" alt="Topline" width="120" height="86"></a>
+      <span>Proposition commerciale</span>
+    </div>
+    <div class="intro-block">
+    <p class="tag"><i></i>Projet à venir : offre Internet + Téléphonie IP</p>
+    <h1>Un seul câble pour la <span class="d">donnée</span> et le <span class="p">courant</span>.</h1>
+    <p class="lead">Un routeur TP-Link, des téléphones Yealink alimentés en PoE : une installation simple à déployer, évolutive, et adaptée à des clients de toutes tailles.</p>
+    </div>
+
+    <div class="lab" aria-label="Simulateur de câblage">
+      <div class="ctrl">
+        <h2>Comparez le câblage</h2>
+        <p>Choisissez le mode d’installation et le nombre de postes. Voyez ce qu’il faut tirer et brancher.</p>
+        <div class="seg" id="modes" role="group" aria-label="Mode d’installation">
+          <button type="button" data-m="poe" aria-pressed="true">Yealink en PoE<small>1 câble RJ45, pas de prise secteur</small></button>
+          <button type="button" data-m="sans" aria-pressed="false">Yealink sans PoE<small>1 câble RJ45 + 1 bloc 220 V par poste</small></button>
+          <button type="button" data-m="wifi" aria-pressed="false">Yealink en Wi-Fi<small>Aucun câble réseau, alimentation seule</small></button>
+        </div>
+        <label for="n">Nombre de postes <output id="nout">6</output></label>
+        <input type="range" id="n" min="1" max="20" value="6">
+      </div>
+      <div class="stage">
+        <div class="bus" id="bus" aria-live="polite"></div>
+        <div class="count">
+          <div class="k-d"><strong id="c1">6</strong><span>câbles réseau RJ45 à tirer</span></div>
+          <div class="k-p"><strong id="c2">0</strong><span>prises 220 V à prévoir</span></div>
+          <div><strong id="c3">6</strong><span>éléments à installer côté bureau</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="architecture">
+  <div class="wrap">
+    <h2>Trois briques, plusieurs combinaisons</h2>
+    <p class="intro">Selon le client et le matériel retenu, l’architecture s’adapte. Voici les choix à faire pour chaque brique.</p>
+
+    <div class="arch">
+      <article class="card big">
+        <h3>Routeur TP-Link</h3>
+        <p>La gamme existe en plusieurs versions. Le choix dépend de l’alimentation des postes et de la couverture Wi-Fi souhaitée.</p>
+        <div class="opts">
+          <div class="opt yes"><b>Avec ports PoE intégrés</b>Alimente directement les téléphones IP et autres équipements PoE par le câble RJ45.<br><span class="chip">Recommandé</span></div>
+          <div class="opt"><b>Sans ports PoE</b>Nécessite un switch PoE pour alimenter les équipements compatibles.</div>
+          <div class="opt yes"><b>Avec Wi-Fi intégré</b>Suffisant pour de petites structures : pas de borne supplémentaire.<br><span class="chip">Recommandé si la couverture suffit</span></div>
+          <div class="opt"><b>Sans Wi-Fi</b>Nécessite des bornes Wi-Fi dédiées.</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Téléphones Yealink</h3>
+        <p>Deux modes d’installation filaire :</p>
+        <ul class="plain">
+          <li><b>Avec PoE :</b> un câble RJ45 transporte données et alimentation.</li>
+          <li><b>Sans PoE :</b> un câble RJ45 et un bloc d’alimentation 220 V par poste.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Utilisation du Wi-Fi</h3>
+        <p>Si le routeur offre un Wi-Fi performant, ou si un réseau Wi-Fi existe déjà, certains Yealink compatibles se connectent sans câble réseau. Ils n’ont besoin que d’une alimentation 220 V (ou PoE selon le modèle).</p>
+        <p style="margin-top:10px">Pratique pour les bureaux où le câblage est difficile ou coûteux.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="comparatif">
+  <div class="wrap">
+    <h2>Les trois modes côte à côte</h2>
+    <p class="intro">Ce que chaque installation demande sur place.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th></th><th>PoE</th><th>Sans PoE</th><th>Wi-Fi</th></tr></thead>
+        <tbody>
+          <tr><td>Câble réseau RJ45</td><td>1 par poste</td><td>1 par poste</td><td class="good">Aucun</td></tr>
+          <tr><td>Prise 220 V au poste</td><td class="good">Aucune</td><td class="warn">1 par poste</td><td>Oui (ou PoE selon modèle)</td></tr>
+          <tr><td>Bloc d’alimentation</td><td class="good">Non</td><td class="warn">1 par téléphone</td><td>Selon le modèle</td></tr>
+          <tr><td>Cas d’usage</td><td>Installation standard, simple et propre</td><td>Réseau sans PoE disponible</td><td>Câblage difficile ou coûteux</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="recommandation">
+  <div class="wrap">
+    <div class="reco">
+      <h2>Notre recommandation</h2>
+      <ol>
+        <li><div><b>Routeur TP-Link PoE, ou switch PoE dédié</b>Les ports PoE fournissent le courant aux téléphones sans autre équipement.</div></li>
+        <li><div><b>Postes Yealink alimentés en PoE</b>Un câble par poste, et moins de prises électriques dans les bureaux.</div></li>
+        <li><div><b>Routeur avec Wi-Fi intégré si la couverture suffit</b>On évite ainsi l’ajout de bornes Wi-Fi supplémentaires.</div></li>
+      </ol>
+      <p class="end">Le résultat : une offre complète Internet + Téléphonie IP, simple à déployer, évolutive et adaptée à différents types de clients.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Topline · Proposition de solution Internet + Téléphonie IP</span>
+    <span>TP-Link · Yealink</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var mode='poe', n=6;
+  var bus=document.getElementById('bus');
+  var phone='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 7h6M9 11h6M9 15h6"/></svg>';
+  function render(){
+    var h='';
+    for(var i=0;i<n;i++){
+      var wires = mode==='poe' ? '<b class="x" style="height:20px"></b>'
+        : mode==='sans' ? '<b class="d" style="height:20px"></b><b class="p" style="height:20px"></b>'
+        : '<b class="none" style="height:20px"></b><b class="p" style="height:20px"></b>';
+      h+='<div class="ph">'+phone+'<div class="w">'+wires+'</div>Poste '+(i+1)+'</div>';
+    }
+    bus.innerHTML=h;
+    var rj = mode==='wifi'?0:n;
+    var pw = mode==='poe'?0:n;
+    document.getElementById('c1').textContent=rj;
+    document.getElementById('c2').textContent=pw;
+    document.getElementById('c3').textContent=rj+pw;
+    document.getElementById('nout').textContent=n;
+  }
+  document.getElementById('modes').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    mode=b.dataset.m;
+    [].forEach.call(this.children,function(c){c.setAttribute('aria-pressed',c===b)});
+    render();
+  });
+  document.getElementById('n').addEventListener('input',function(){n=+this.value;render()});
+  render();
+})();
+</script>
+</body>
+</html>
